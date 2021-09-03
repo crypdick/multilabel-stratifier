@@ -47,11 +47,3 @@ repos:
     hooks:
       - id: flake8
         args: ['--config=.flake8']
-  - repo: https://github.com/daavidstein/pre-commit-sphinx
-    rev: 7b86493c080832bfdc5127138acbbad58b9ea02e
-    hooks:
-      - id: build-docs
-        args: ['--docs-dir', 'docs', '--module-dir', 'src/seeweed/']
-        language_version: python3
-        pass_filenames: false
-        always_run: true
