@@ -26,7 +26,7 @@ You can use this class exactly the same way you would use a normal scikit KFold 
 
 .. code-block :: python
 
-    from skmultilearn.model_selection import IterativeStratification
+    from multilabelstratifier.model_selection import IterativeStratification
 
     k_split = IterativeStratification(n_splits=2, order=1):
     for train, test in k_split.split(X, y):

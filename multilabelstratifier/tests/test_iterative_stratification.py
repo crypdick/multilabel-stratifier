@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from skmultilearn import IterativeStratification
+from multilabelstratifier import IterativeStratification
 
 
 class IterativeStratificationTest(unittest.TestCase):

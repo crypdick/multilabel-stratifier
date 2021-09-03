@@ -24,7 +24,7 @@ follows a similar API to that of [scikit-learn](http://scikit-learn.org/).
 
 ## Dependencies
 
-In most cases you will want to follow the requirements defined in the requirements/*.txt files in the package. 
+In most cases you will want to follow the requirements defined in the requirements/*.txt files in the package.
 
 ### Base dependencies
 ```
@@ -52,7 +52,7 @@ Note: Installing graphtool is complicated, please see: [graphtool install instru
 To install scikit-multilearn, simply type the following command:
 
 ```bash
-$ pip install scikit-multilearn
+$ pip install multilabel-stratifier
 ```
 
 This will install the latest release from the Python package index. If you
@@ -61,7 +61,7 @@ run `setup.py`:
 
 ```bash
 $ git clone https://github.com/scikit-multilearn/scikit-multilearn.git
-$ cd scikit-multilearn
+$ cd multilabel-stratifier
 $ python setup.py
 ```
 
@@ -79,14 +79,14 @@ problem, to a Support-vector machine (SVM) classifier, we simply perform
 the following tasks:
 
 ```python
-# Import BinaryRelevance from skmultilearn
-from skmultilearn.problem_transform import BinaryRelevance
+# Import BinaryRelevance from multilabelstratifier
+from multilabelstratifier.problem_transform import BinaryRelevance
 
 # Import SVC classifier from sklearn
 from sklearn.svm import SVC
 
 # Setup the classifier
-classifier = BinaryRelevance(classifier=SVC(), require_dense=[False,True])
+classifier = BinaryRelevance(classifier=SVC(), require_dense=[False, True])
 
 # Train
 classifier.fit(X_train, y_train)
@@ -95,7 +95,7 @@ classifier.fit(X_train, y_train)
 y_pred = classifier.predict(X_test)
 ```
 
-More examples and use-cases can be seen in the 
+More examples and use-cases can be seen in the
 [documentation](http://scikit.ml/api/classify.html). For using the MEKA
 wrapper, check this [link](http://scikit.ml/api/meka.html#mekawrapper).
 
@@ -109,7 +109,7 @@ you to contribute:
 - Use-case demonstrations
 - Documentation updates
 
-In case you want to implement your own multi-label classifier, please 
+In case you want to implement your own multi-label classifier, please
 read our [Developer's Guide](http://scikit.ml/api/base.html) to help
 you integrate your implementation in our API.
 

@@ -1,6 +1,6 @@
 # import unittest
 #
-# from skmultilearn import (
+# from multilabelstratifier import (
 #     example_distribution,
 #     folds_label_combination_pairs_without_evidence,
 #     folds_without_evidence_for_at_least_one_label_combination,
