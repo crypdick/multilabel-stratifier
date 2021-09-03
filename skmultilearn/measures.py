@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-import numpy as np
 import itertools as it
+
+import numpy as np
 
 
 def example_distribution(folds, desired_size):
-    """Examples Distribution (ED) measure
+    """
+    Examples Distribution (ED) measure.
 
      Examples Distribution is a measure of how much a given fold's size deviates from the desired number
      of samples in each of the folds.
@@ -25,13 +27,14 @@ def example_distribution(folds, desired_size):
     """
     n_splits = float(len(folds))
 
-    return np.sum(
-        np.abs(len(fold) - desired_fold_size) for fold, desired_fold_size in zip(folds, desired_size)
-    ) / n_splits
+    return (
+        np.sum(np.abs(len(fold) - desired_fold_size) for fold, desired_fold_size in zip(folds, desired_size)) / n_splits
+    )
 
 
 def get_indicator_representation(row):
-    """Convert binary indicator to list of assigned labels
+    """
+    Convert binary indicator to list of assigned labels.
 
     Parameters:
     -----------
@@ -48,7 +51,8 @@ def get_indicator_representation(row):
 
 
 def get_combination_wise_output_matrix(y, order):
-    """Returns label combinations of a given order that are assigned to each row
+    """
+    Returns label combinations of a given order that are assigned to each row.
 
     Parameters:
     -----------
@@ -63,12 +67,20 @@ def get_combination_wise_output_matrix(y, order):
     combinations_per_row : List[Set[Tuple[int]]]
         list of combination assignments per row
     """
-    return np.array([set(tuple(combination) for combination in
-                         it.combinations_with_replacement(get_indicator_representation(row), order)) for row in y])
+    return np.array(
+        [
+            set(
+                tuple(combination)
+                for combination in it.combinations_with_replacement(get_indicator_representation(row), order)
+            )
+            for row in y
+        ]
+    )
 
 
 def get_unique_combinations(combinations_per_row):
-    """Performs set.union on a list of sets
+    """
+    Performs set.union on a list of sets.
 
     Parameters
     ----------
@@ -85,7 +97,9 @@ def get_unique_combinations(combinations_per_row):
 
 
 def folds_without_evidence_for_at_least_one_label_combination(y, folds, order=1):
-    """Counts the number of folds without evidence for a given Label, Label Pair or Label Combination (FZ, FZLP, FZLC) measure
+    """
+    Counts the number of folds without evidence for a given Label, Label Pair or Label Combination (FZ, FZLP, FZLC)
+    measure.
 
     A general implementation of FZ - the number of folds that contain at least one label combination of order
     :code:`order` with no positive examples. With :code:`order` = 1, it becomes the FZ measure from Katakis et.al's
@@ -139,7 +153,8 @@ def folds_label_combination_pairs_without_evidence(y, folds, order):
     combinations_per_row = get_combination_wise_output_matrix(y, order)
     all_combinations = get_unique_combinations(combinations_per_row)
     return np.sum(
-        [len(all_combinations.difference(get_unique_combinations(combinations_per_row[[fold]]))) for fold in folds])
+        [len(all_combinations.difference(get_unique_combinations(combinations_per_row[[fold]]))) for fold in folds]
+    )
 
 
 def percentage_of_label_combinations_without_evidence_per_fold(y, folds, order):
@@ -169,13 +184,12 @@ def percentage_of_label_combinations_without_evidence_per_fold(y, folds, order):
     combinations_per_row = get_combination_wise_output_matrix(y, order)
     all_combinations = get_unique_combinations(combinations_per_row)
     number_of_combinations = float(len(all_combinations))
-    return [
-        1.0 - len(get_unique_combinations(combinations_per_row[[fold]])) / number_of_combinations for fold in folds
-    ]
+    return [1.0 - len(get_unique_combinations(combinations_per_row[[fold]])) / number_of_combinations for fold in folds]
 
 
 def label_combination_distribution(y, folds, order):
-    """Label / Label Pair / Label Combination Distribution (LD, LPD, LCZD) measure
+    """
+    Label / Label Pair / Label Combination Distribution (LD, LPD, LCZD) measure.
 
     A general implementation of Label / Label Pair / Label Combination Distribution - a measure that evaluates
     how the proportion of positive evidence for a label / label pair / label combination to the negative evidence
@@ -212,15 +226,16 @@ def label_combination_distribution(y, folds, order):
 
     external_sum = 0
     for combination in all_combinations:
-        number_of_samples_with_combination = np.sum([
-            1 for combinations_in_row in combinations_per_row if combination in combinations_in_row
-        ])
+        number_of_samples_with_combination = np.sum(
+            [1 for combinations_in_row in combinations_per_row if combination in combinations_in_row]
+        )
 
         d = _get_proportion(number_of_samples, number_of_samples_with_combination)
         internal_sum = 0
         for fold in folds:
             S_i_j = np.sum(
-                [1 for combinations_in_row in combinations_per_row[fold] if combination in combinations_in_row])
+                [1 for combinations_in_row in combinations_per_row[fold] if combination in combinations_in_row]
+            )
             fold_size = len(fold)
             s = _get_proportion(fold_size, S_i_j)
             internal_sum += np.abs(s - d)
