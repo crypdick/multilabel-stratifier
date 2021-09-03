@@ -1,0 +1,7 @@
+# flake8 does not support pyproject.toml
+# see https://gitlab.com/pycqa/flake8/-/issues/428
+[flake8]
+max-line-length = 120
+ignore = 'E1, E2, E3, E402, E5, E722, E731, W503, W504'
+extend-ignore = 'E203'
+extend-exclude = .git/,venv/
