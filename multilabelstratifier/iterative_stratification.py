@@ -71,11 +71,15 @@ Bibtex:
 """
 
 import itertools
+import logging
+import time
 
 import numpy as np
 import scipy.sparse as sp
 from sklearn.model_selection._split import _BaseKFold
 from sklearn.utils import check_random_state
+
+logger = logging.getLogger(__name__)
 
 
 def iterative_train_test_split(X, y, test_size):
@@ -238,7 +242,8 @@ class IterativeStratification(_BaseKFold):
         splits: List[List[int]] (n_splits)
             list of lists to be populated with samples
         """
-
+        logger.info("Preparing stratification")
+        start = time.time()
         # for every row
         for sample_index, label_assignment in enumerate(self.rows):
             # for every n-th order label combination
@@ -259,6 +264,7 @@ class IterativeStratification(_BaseKFold):
             )
             for combination, evidence_for_combination in self.samples_with_combination.items()
         }
+        logger.info(f"Prep stratification finished in {time.time()-start}")
 
     def _distribute_positive_evidence(self):
         """
@@ -267,6 +273,9 @@ class IterativeStratification(_BaseKFold):
         For params, see documentation of :code:`self._prepare_stratification`. Does not return anything, modifies
         params.
         """
+        logger.info("Distributing positive evidence")
+        start = time.time()
+
         most_desirable_combo = _get_most_desired_combination(self.samples_with_combination)
         while most_desirable_combo is not None:
             while len(self.samples_with_combination[most_desirable_combo]) > 0:
@@ -289,6 +298,8 @@ class IterativeStratification(_BaseKFold):
 
             most_desirable_combo = _get_most_desired_combination(self.samples_with_combination)
 
+        logger.info(f"Distributing positive evidence finished in {time.time()-start}")
+
     def _distribute_negative_evidence(self):
         """
         Internal method to distribute evidence for unlabeled samples across splits.
@@ -296,6 +307,9 @@ class IterativeStratification(_BaseKFold):
         For params, see documentation of :code:`self._prepare_stratification`. Does not return anything, modifies
         params.
         """
+        logger.info("Distributing negative evidence")
+        start = time.time()
+
         available_samples = [i for i, v in self.rows_used.items() if not v]
         samples_left = len(available_samples)
 
@@ -306,6 +320,8 @@ class IterativeStratification(_BaseKFold):
             split_selected = np.random.choice(np.where(self.desired_samples_per_split > 0)[0], 1)[0]
             self.desired_samples_per_split[split_selected] -= 1
             self.splits[split_selected].append(row)
+
+        logger.info(f"Distributing negative evidence finished in {time.time()-start}")
 
     def _iter_test_indices(self, X, y=None, groups=None):
         """
