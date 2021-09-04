@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-orange.svg)](https://opensource.org/licenses/BSD-2-Clause)
 [![Build status](https://ci.appveyor.com/api/projects/status/d04lx2q3viw090my?svg=true)](https://ci.appveyor.com/project/crypdick/multilabel-stratifier)
 
-This is a fork of [scikit-multilearn](http://scikit.ml), which unfortunately appears abandoned.
+This is a fork of [scikit-multilearn](http://scikit.ml), which unfortunately appears abandoned. In particular, I am maintaining a version of the IterativeStratification algorithm.
 
 ## Installation
 
