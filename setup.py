@@ -15,7 +15,7 @@ setup(
     author_email="public@richarddecal.com",
     license="BSD",
     long_description=readme,
-    url="",
+    url="https://github.com/crypdick/multilabel-stratifier",
     description="Maintained iterative stratification algorithm from the abandoned scikit-multilearn library.",
     classifiers=[
         "Environment :: Console",
