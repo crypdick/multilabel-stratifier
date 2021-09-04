@@ -9,7 +9,7 @@ with io.open("README.md", "r") as f:
 
 setup(
     name="multilabel-stratifier",
-    version="0.2.0",
+    version="0.3.0",
     packages=find_packages(exclude=["docs", "tests"]),
     author="Richard Decal",
     author_email="public@richarddecal.com",
