@@ -72,6 +72,7 @@ Bibtex:
 
 import itertools
 import logging
+import sys
 import time
 
 import numpy as np
@@ -80,6 +81,7 @@ from sklearn.model_selection._split import _BaseKFold
 from sklearn.utils import check_random_state
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 def iterative_train_test_split(X, y, test_size):
