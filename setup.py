@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
 # import sphinx_pypi_upload
-import sys
+import io
 
 from setuptools import find_packages, setup
 
-if sys.version_info[0] < 3:
-    import codecs
-
-    with codecs.open("README.md", "r", "utf-8") as f:
-        readme = f.read()
-
-else:
-    import io
-
-    with io.open("README.md", "r", "utf-8") as f:
-        readme = f.read()
+with io.open("README.md", "r") as f:
+    readme = f.read()
 
 setup(
     name="multilabel-stratifier",
     version="0.2.0",
-    packages=find_packages(exclude=["docs", "tests", "*.tests"]),
+    packages=find_packages(exclude=["docs", "tests"]),
     author=u"Piotr Szymański",
     author_email=u"niedakh@gmail.com",
     license=u"BSD",
